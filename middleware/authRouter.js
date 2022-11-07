@@ -64,7 +64,7 @@ router.post("/sign-up", (req, res) => {
 	const hash = bcrypt.hashSync(password, saltRounds);
 	writeUserToDatabase({ firstName, lastName, birthday, email, password: hash });
 
-	return res.status(200), res.json("signup");
+	return res.status(200), res.json({ status: "success" });
 });
 
 module.exports = router;
