@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { writeUserToDatabase } = require("../utils/database");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -50,8 +51,7 @@ router.post("/sign-up", (req, res) => {
 		);
 
 	const [isValid, error] = isBirthdayValid(birthday);
-	if (!isValid)
-		return res.status(400), res.json({ error });
+	if (!isValid) return res.status(400), res.json({ error });
 
 	if (!/^[A-Za-z0-9._%+-]+@newage\.io$/.test(email))
 		return (
@@ -62,7 +62,8 @@ router.post("/sign-up", (req, res) => {
 		);
 
 	const hash = bcrypt.hashSync(password, saltRounds);
-	console.log(hash);
+	writeUserToDatabase({ firstName, lastName, birthday, email, password: hash });
+
 	return res.status(200), res.json("signup");
 });
 
