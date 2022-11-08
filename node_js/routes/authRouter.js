@@ -8,6 +8,9 @@ const {
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const jwt = require("jsonwebtoken");
+const JWT_SECRET_KEY = "V*i4AECQA^*zjN";
+
 const isBirthdayValid = (birthday) => {
 	if (birthday.length !== 10 || !/\d{4}-\d{2}-\d{2}/.test(birthday))
 		return [
@@ -98,10 +101,8 @@ router.post("/sign-in", (req, res) => {
 				error: "Password seems to be incorrect",
 			})
 		);
-
-	return (
-		res.status(200),
-		res.json({ status: "success" })
-	);
+	delete userDetails["password"]
+	const token = jwt.sign(userDetails, JWT_SECRET_KEY, { expiresIn: "60m" });
+	return res.header('Authorization', `Bearer ${token}`), res.status(200), res.json({ status: "success" });
 });
 module.exports = router;
