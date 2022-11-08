@@ -1,18 +1,1 @@
-[
-	{
-		"firstName": "David",
-		"lastName": "Munjishvili",
-		"birthday": "2003-02-03",
-		"email": "data@newage.io",
-		"password": "$2b$10$SKUCT18y6Bh5.GyxONS1gecyo5WF3EQs1IKbzyVIW7hZRtY1rLmyK",
-		"uuid": "eeb33699-7eed-438c-a3cf-fe2cb64626a3"
-	},
-	{
-		"firstName": "David",
-		"lastName": "Munjishvili",
-		"birthday": "2003-02-03",
-		"email": "someone@newage.io",
-		"password": "$2b$10$xC93u5aI6slGOx4a8hvAeulgoaOQx2Fnn0rl1oQk0x.kxtsXhxB02",
-		"uuid": "022841c3-33f8-46a0-8698-54051a8aceb7"
-	}
-]
+{}
