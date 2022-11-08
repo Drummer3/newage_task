@@ -112,4 +112,10 @@ router.post("/sign-in", (req, res) => {
 		res.json({ status: "success" })
 	);
 });
+
+router.get("/me", privateRouteMiddleware, (req, res) => {
+	const user = jwt.decode(req.headers.authorization.split("Bearer ")[1]);
+	res.send({ user });
+});
+
 module.exports = router;
