@@ -9,14 +9,14 @@ const {
 
 const {
 	privateRouteMiddleware,
-	ownerMiddlerware,
+	ownerMiddleware,
 } = require("../middleware/privateRouteMiddleware");
 
 const router = express.Router();
 
 router.put(
 	"/:userid",
-	[privateRouteMiddleware, ownerMiddlerware],
+	[privateRouteMiddleware, ownerMiddleware],
 	(req, res) => {
 		const userId = req.params.userid;
 		const { firstName, lastName } = req.body;
@@ -61,7 +61,7 @@ router.put(
 
 router.delete(
 	"/:userid",
-	[privateRouteMiddleware, ownerMiddlerware],
+	[privateRouteMiddleware, ownerMiddleware],
 	(req, res) => {
 		deleteUserFromDatabase(req.params.userid);
 		const token = req.headers.authorization;

@@ -28,7 +28,7 @@ function privateRouteMiddleware(req, res, next) {
 	next();
 }
 
-function ownerMiddlerware(req, res, next) {
+function ownerMiddleware(req, res, next) {
 	const token = req.headers.authorization.split("Bearer ")[1];
 	const user = jwt.decode(token);
 	if (user.uuid !== req.params.userid)
@@ -39,4 +39,4 @@ function ownerMiddlerware(req, res, next) {
 	next();
 }
 
-module.exports = { privateRouteMiddleware, ownerMiddlerware };
+module.exports = { privateRouteMiddleware, ownerMiddleware };
