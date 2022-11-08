@@ -9,14 +9,9 @@ const JWT_SECRET_KEY = "V*i4AECQA^*zjN";
 const {
 	writeUserToDatabase,
 	readUserFromDatabase,
-	readUserFromDatabaseWithIndex,
-	updateDatabaseRecord,
-	deleteUserFromDatabase,
-	blacklistToken,
 } = require("../utils/database");
 const {
 	privateRouteMiddleware,
-	ownerMiddlerware,
 } = require("../middleware/privateRouteMiddleware");
 
 const isBirthdayValid = (birthday) => {
@@ -122,54 +117,5 @@ router.get("/me", privateRouteMiddleware, (req, res) => {
 	const user = jwt.decode(req.headers.authorization.split("Bearer ")[1]);
 	res.send({ user });
 });
-
-router.put(
-	"/:userid",
-	[privateRouteMiddleware, ownerMiddlerware],
-	(req, res) => {
-		const userId = req.params.userid;
-		const { firstName, lastName } = req.body;
-		if (!firstName || !lastName)
-			return (
-				res.status(400),
-				res.json({ err: "First name and last name are required fields" })
-			);
-
-		if (!/^[A-Za-z]+$/.test(firstName))
-			return (
-				res.status(400),
-				res.json({
-					error: "First name shouldn't only use latin characters",
-				})
-			);
-
-		if (!/^[A-Za-z]+$/.test(lastName))
-			return (
-				res.status(400),
-				res.json({
-					error: "Last name shouldn't only use latin characters",
-				})
-			);
-
-		const existingData = readUserFromDatabaseWithIndex(userId);
-		existingData.firstName = firstName;
-		existingData.lastName = lastName;
-
-		const user = updateDatabaseRecord(userId, existingData);
-
-		return res.send({ user });
-	}
-);
-
-router.delete(
-	"/:userid",
-	[privateRouteMiddleware, ownerMiddlerware],
-	(req, res) => {
-		deleteUserFromDatabase(req.params.userid);
-		const token = req.headers.authorization;
-		blacklistToken(token);
-		return res.send("gucci");
-	}
-);
 
 module.exports = router;
