@@ -78,4 +78,30 @@ router.post("/sign-up", (req, res) => {
 	return res.status(200), res.json({ status: "success" });
 });
 
+router.post("/sign-in", (req, res) => {
+	const email = req.body.email;
+	const password = req.body.password;
+	const userDetails = readUserFromDatabase(email);
+	if (!userDetails)
+		return (
+			res.status(400),
+			res.json({
+				error: "This email doesn't seem familiar. Try another email",
+			})
+		);
+
+	const isPasswordCorrect = bcrypt.compareSync(password, userDetails.password);
+	if (!isPasswordCorrect)
+		return (
+			res.status(400),
+			res.json({
+				error: "Password seems to be incorrect",
+			})
+		);
+
+	return (
+		res.status(200),
+		res.json({ status: "success" })
+	);
+});
 module.exports = router;
