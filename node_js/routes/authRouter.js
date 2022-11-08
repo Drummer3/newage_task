@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { writeUserToDatabase } = require("../utils/database");
+const {
+	writeUserToDatabase,
+	readUserFromDatabase,
+} = require("../utils/database");
 
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
@@ -34,6 +37,14 @@ router.post("/sign-up", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
+	const isEmailUsed = readUserFromDatabase(email);
+	if (isEmailUsed)
+		return (
+			res.status(400),
+			res.json({
+				error: "We already have a record with this email",
+			})
+		);
 	if (!/^[A-Za-z]+$/.test(firstName))
 		return (
 			res.status(400),
