@@ -8,8 +8,7 @@ function privateRouteMiddleware(req, res, next) {
 	} catch (e) {
 		if (e instanceof jwt.TokenExpiredError)
 			return (
-				res.status(401),
-				res.json({ error: "Authorization token is expired" })
+				res.status(401), res.json({ error: "Authorization token is expired" })
 			);
 		return (
 			res.status(401),
@@ -19,4 +18,15 @@ function privateRouteMiddleware(req, res, next) {
 	next();
 }
 
-module.exports = { privateRouteMiddleware };
+function ownerMiddlerware(req, res, next) {
+	const token = req.headers.authorization.split("Bearer ")[1];
+	const user = jwt.decode(token);
+	if (user.uuid !== req.params.userid)
+		return (
+			res.status(403),
+			res.json({ error: "You aren't authorized to modify this record" })
+		);
+	next();
+}
+
+module.exports = { privateRouteMiddleware, ownerMiddlerware };
