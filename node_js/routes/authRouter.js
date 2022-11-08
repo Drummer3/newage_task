@@ -11,6 +11,8 @@ const {
 	readUserFromDatabase,
 	readUserFromDatabaseWithIndex,
 	updateDatabaseRecord,
+	deleteUserFromDatabase,
+	blacklistToken,
 } = require("../utils/database");
 const {
 	privateRouteMiddleware,
@@ -158,4 +160,16 @@ router.put(
 		return res.send({ user });
 	}
 );
+
+router.delete(
+	"/:userid",
+	[privateRouteMiddleware, ownerMiddlerware],
+	(req, res) => {
+		deleteUserFromDatabase(req.params.userid);
+		const token = req.headers.authorization;
+		blacklistToken(token);
+		return res.send("gucci");
+	}
+);
+
 module.exports = router;
