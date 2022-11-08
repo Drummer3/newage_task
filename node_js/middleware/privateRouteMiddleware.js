@@ -1,8 +1,18 @@
+const { getBlacklistToken } = require("../utils/database");
+
 const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = "V*i4AECQA^*zjN";
 
 function privateRouteMiddleware(req, res, next) {
 	const header_token = req.headers.authorization?.split("Bearer ")[1];
+
+	const blacklist = getBlacklistToken();
+	if (blacklist.includes(req.headers.authorization))
+		return (
+			res.status(401),
+			res.json({ error: "Your authorization token is invalid" })
+		);
+
 	try {
 		jwt.verify(header_token, JWT_SECRET_KEY);
 	} catch (e) {
