@@ -28,4 +28,16 @@ function readUserFromDatabaseWithIndex(index) {
 	return database[index];
 }
 
-module.exports = { writeUserToDatabase, readUserFromDatabase, readUserFromDatabaseWithIndex };
+function updateDatabaseRecord(index, userDetails) {
+	const database = JSON.parse(fs.readFileSync(DATABASE_FILE));
+	database[index] = userDetails;
+	fs.writeFileSync(DATABASE_FILE, JSON.stringify(database));
+	return database[index];
+}
+
+module.exports = {
+	writeUserToDatabase,
+	readUserFromDatabase,
+	readUserFromDatabaseWithIndex,
+	updateDatabaseRecord,
+};
