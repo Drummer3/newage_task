@@ -1,15 +1,18 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
 const router = express.Router();
+const saltRounds = 10;
+const JWT_SECRET_KEY = "V*i4AECQA^*zjN";
+
 const {
 	writeUserToDatabase,
 	readUserFromDatabase,
 } = require("../utils/database");
-
-const bcrypt = require("bcrypt");
-const saltRounds = 10;
-
-const jwt = require("jsonwebtoken");
-const JWT_SECRET_KEY = "V*i4AECQA^*zjN";
+const {
+	privateRouteMiddleware,
+} = require("../middleware/privateRouteMiddleware");
 
 const isBirthdayValid = (birthday) => {
 	if (birthday.length !== 10 || !/\d{4}-\d{2}-\d{2}/.test(birthday))
