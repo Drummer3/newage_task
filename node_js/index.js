@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-const authRouter = require("./middleware/authRouter");
+const authRouter = require("./routes/authRouter");
 
 app.use(express.json());
 app.use("/api/auth", authRouter);
