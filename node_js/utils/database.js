@@ -2,6 +2,7 @@ const fs = require("fs");
 const { v4: uuidv4 } = require("uuid");
 
 const DATABASE_FILE = "./database/users.json";
+const BLACKLIST_FILE = "./database/blacklist.json";
 
 function writeUserToDatabase(userDetails) {
 	const userId = uuidv4();
@@ -35,9 +36,31 @@ function updateDatabaseRecord(index, userDetails) {
 	return database[index];
 }
 
+function deleteUserFromDatabase(index) {
+	const database = JSON.parse(fs.readFileSync(DATABASE_FILE));
+	delete database[index];
+	fs.writeFileSync(DATABASE_FILE, JSON.stringify(database));
+	console.log(database);
+	return database[index];
+}
+
+function blacklistToken(token) {
+	const blacklist = JSON.parse(fs.readFileSync(BLACKLIST_FILE));
+	blacklist.push(token);
+	fs.writeFileSync(BLACKLIST_FILE, JSON.stringify(blacklist));
+}
+
+function getBlacklistToken() {
+	const blacklist = JSON.parse(fs.readFileSync(BLACKLIST_FILE));
+	return blacklist;
+}
+
 module.exports = {
 	writeUserToDatabase,
 	readUserFromDatabase,
 	readUserFromDatabaseWithIndex,
 	updateDatabaseRecord,
+	deleteUserFromDatabase,
+	blacklistToken,
+	getBlacklistToken,
 };
