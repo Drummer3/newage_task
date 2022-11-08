@@ -23,4 +23,9 @@ function readUserFromDatabase(email) {
 	return userDetails;
 }
 
-module.exports = { writeUserToDatabase, readUserFromDatabase };
+function readUserFromDatabaseWithIndex(index) {
+	const database = JSON.parse(fs.readFileSync(DATABASE_FILE));
+	return database[index];
+}
+
+module.exports = { writeUserToDatabase, readUserFromDatabase, readUserFromDatabaseWithIndex };
