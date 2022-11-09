@@ -13,6 +13,11 @@ const authStore = createStore({
       state.authenticated = true;
       localStorage.setItem("authToken", token);
     },
+    logout(state) {
+      state.token = "";
+      state.authenticated = false;
+      localStorage.removeItem("authToken");
+    },
   },
   actions: {
     pageLoad(context) {
@@ -20,6 +25,9 @@ const authStore = createStore({
       if (localToken) {
         context.commit("login", localToken);
       }
+    },
+    logout(context) {
+      context.commit("logout");
     },
   },
 });
