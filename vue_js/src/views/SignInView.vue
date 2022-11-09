@@ -4,38 +4,32 @@ import authStore from "@/store/authStore";
 export default {
   data() {
     return {
-      error: "",
       email: "",
       password: "",
     };
   },
+  computed: {
+    error() {
+      return authStore.state.logInError;
+    },
+  },
   methods: {
     async submitHandler() {
-      this.error = "";
+      authStore.commit("setLogInError", "");
       if (!this.email.includes("@newage.io"))
-        return (this.error = "Please use email with @newage.io");
+        return authStore.commit(
+          "setLogInError",
+          "Please use email with @newage.io"
+        );
       if (this.password.length < 8)
-        return (this.error =
-          "Password length must be equal or more than 8 characters");
-      const response = await fetch("http://localhost:8000/api/auth/sign-in", {
-        method: "POST",
-        headers: {
-          Accept: "*/*",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: this.email,
-          password: this.password,
-        }),
+        return authStore.commit(
+          "setLogInError",
+          "Password length must be equal or more than 8 characters"
+        );
+      authStore.dispatch("signIn", {
+        email: this.email,
+        password: this.password,
       });
-      if (!response.ok) {
-        this.error = (await response.json()).error;
-      } else {
-        const token = (await response.json()).token;
-        authStore.commit("login", token);
-        this.$router.replace("/profile");
-      }
     },
   },
 };
