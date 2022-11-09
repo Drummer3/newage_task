@@ -27,6 +27,14 @@ const router = createRouter({
       },
       component: () => import("../views/SignInView.vue"),
     },
+    {
+      path: "/profile",
+      name: "profile",
+      beforeEnter: () => {
+        if (!authStore.state.authenticated) return false;
+      },
+      component: () => import("../views/ProfileView.vue"),
+    },
   ],
 });
 
