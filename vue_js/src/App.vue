@@ -14,6 +14,12 @@ export default {
   created() {
     authStore.dispatch("pageLoad");
   },
+  methods: {
+    logOut() {
+      authStore.dispatch("logout");
+      return this.$router.replace("/");
+    },
+  },
 };
 </script>
 
@@ -43,8 +49,9 @@ export default {
       </RouterLink>
       <RouterLink
         class="px-4 py-2 duration-150 hover:text-purple-700"
-        to="/log-out"
+        to="/"
         v-if="isAuthenticated"
+        @click.prevent="logOut"
       >
         Log Out
       </RouterLink>

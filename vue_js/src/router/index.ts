@@ -28,14 +28,6 @@ const router = createRouter({
       component: () => import("../views/SignInView.vue"),
     },
     {
-      path: "/log-out",
-      name: "log-out",
-      beforeEnter: () => {
-        if (!authStore.state.authenticated) return false;
-      },
-      component: () => import("../views/LogOutView.vue"),
-    },
-    {
       path: "/profile",
       name: "profile",
       props: { edit: false },
