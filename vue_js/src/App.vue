@@ -11,6 +11,9 @@ export default {
       return authStore.state.authenticated;
     },
   },
+  created() {
+    authStore.dispatch("pageLoad");
+  },
 };
 </script>
 

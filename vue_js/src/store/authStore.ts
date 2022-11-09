@@ -14,6 +14,14 @@ const authStore = createStore({
       localStorage.setItem("authToken", token);
     },
   },
+  actions: {
+    pageLoad(context) {
+      const localToken = localStorage.getItem("authToken");
+      if (localToken) {
+        context.commit("login", localToken);
+      }
+    },
+  },
 });
 
 export default authStore;
