@@ -1,7 +1,16 @@
 <script lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import authStore from "./store/authStore";
 export default {
-  data: () => ({ RouterLink, RouterView }),
+  components: {
+    RouterLink,
+    RouterView,
+  },
+  computed: {
+    isAuthenticated() {
+      return authStore.state.authenticated;
+    },
+  },
 };
 </script>
 
@@ -11,14 +20,23 @@ export default {
       <RouterLink
         class="px-4 py-2 duration-150 hover:text-purple-700"
         to="/sign-up"
+        v-if="!isAuthenticated"
       >
         Sign Up
       </RouterLink>
       <RouterLink
         class="px-4 py-2 duration-150 hover:text-purple-700"
         to="/sign-in"
+        v-if="!isAuthenticated"
       >
         Sign In
+      </RouterLink>
+      <RouterLink
+        class="px-4 py-2 duration-150 hover:text-purple-700"
+        to="/profile"
+        v-if="isAuthenticated"
+      >
+        Profile
       </RouterLink>
     </nav>
   </header>
