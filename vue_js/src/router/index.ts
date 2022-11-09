@@ -30,6 +30,16 @@ const router = createRouter({
     {
       path: "/profile",
       name: "profile",
+      props: { edit: false },
+      beforeEnter: () => {
+        if (!authStore.state.authenticated) return false;
+      },
+      component: () => import("../views/ProfileView.vue"),
+    },
+    {
+      path: "/profile/:userId/edit",
+      name: "profile-edit",
+      props: { edit: true },
       beforeEnter: () => {
         if (!authStore.state.authenticated) return false;
       },
