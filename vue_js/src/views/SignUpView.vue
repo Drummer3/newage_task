@@ -2,6 +2,7 @@
 export default {
   data() {
     return {
+      error: null,
       firstName: "",
       lastName: "",
       birthday: "",
@@ -11,6 +12,7 @@ export default {
   },
   methods: {
     async submitHandler() {
+      this.error = null;
       const response = await fetch("http://localhost:8000/api/auth/sign-up", {
         method: "POST",
         headers: {
@@ -27,7 +29,9 @@ export default {
         }),
       });
       if (!response.ok) {
-        console.error((await response.json()).error);
+        this.error = (await response.json()).error;
+      } else {
+        this.$router.replace("/sign-in");
       }
     },
   },
@@ -37,39 +41,68 @@ export default {
 <template>
   <form
     @submit.prevent="submitHandler"
-    class="flex flex-col max-w-md gap-4 mx-auto"
+    class="bg-gray-50 p-4 rounded-xl flex flex-col gap-4 max-w-xs mx-auto shadow-lg shadow-gray-900 duration-150 hover:shadow-gray-500"
   >
+    <p class="text-center text-xl">Sign Up</p>
+    <div
+      v-if="error"
+      class="p-4 border-2 border-red-500 rounded-lg text-center"
+    >
+      <span class="text-sm font-semibold">{{ error }}</span>
+    </div>
     <label>
-      <p>First Name</p>
+      <p class="text-xs">First Name</p>
       <input
-        :required="false"
+        required
+        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
         type="text"
-        placeholder="First name"
+        placeholder="David"
         v-model="firstName"
       />
     </label>
     <label>
-      <p>Last Name</p>
+      <p class="text-xs">Last Name</p>
       <input
-        :required="false"
+        required
+        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
         type="text"
-        placeholder="Last name"
+        placeholder="Munjishvili"
         v-model="lastName"
       />
     </label>
     <label>
-      <p>Birthday</p>
-      <input :required="false" type="date" v-model="birthday" />
+      <p class="text-xs">Birthday</p>
+      <input
+        required
+        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
+        type="date"
+        v-model="birthday"
+      />
     </label>
     <label>
-      <p>Email</p>
-      <input :required="false" type="email" v-model="email" />
+      <p class="text-xs">Email</p>
+      <input
+        required
+        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
+        type="email"
+        v-model="email"
+      />
     </label>
     <label>
-      <p>Password</p>
-      <input :required="false" type="password" v-model="password" />
+      <p class="text-xs">Password</p>
+      <input
+        required
+        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
+        type="password"
+        placeholder="p4ssw0rd"
+        v-model="password"
+      />
     </label>
-    <button type="submit">Submit</button>
+    <button
+      class="w-full px-4 py-2 rounded-lg text-gray-50 bg-purple-600 duration-100 hover:bg-purple-500"
+      type="submit"
+    >
+      Sign Up
+    </button>
   </form>
-  <div></div>
 </template>
