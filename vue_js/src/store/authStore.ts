@@ -1,4 +1,5 @@
 import { createStore } from "vuex";
+import router from "../router/index";
 
 const authStore = createStore({
   state() {
@@ -7,6 +8,7 @@ const authStore = createStore({
       token: "",
       user: { firstName: "", lastName: "", birthday: "", email: "", uuid: "" },
       userEditError: "",
+      userInfoError: "",
     };
   },
   mutations: {
@@ -20,11 +22,18 @@ const authStore = createStore({
       state.authenticated = false;
       localStorage.removeItem("authToken");
     },
+    userInfoSuccess(state, user) {
+      state.user = user;
+    },
+    userInfoError(state, error) {
+      state.userInfoError = error;
+    },
     userEditError(state, error) {
       state.userEditError = error;
     },
     userEditSuccess(state, user) {
       state.user = user;
+      router.push("/profile");
     },
   },
   actions: {
@@ -34,6 +43,23 @@ const authStore = createStore({
         context.commit("login", localToken);
       }
     },
+
+    async userInfo(context) {
+      context.commit("userInfoError", "");
+      const response: any = await fetch("http://localhost:8000/api/auth/me", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${authStore.state.token}`,
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok)
+        return context.commit("userInfoError", (await response.json()).error);
+      context.commit("userInfoSuccess", (await response.json()).user);
+    },
+
     async userEdit(context, payload) {
       const response: any = await fetch(
         `http://localhost:8000/api/users/${payload.uuid}`,
@@ -52,6 +78,7 @@ const authStore = createStore({
         return context.commit("userEditError", (await response.json()).error);
       return context.commit("userEditSuccess", (await response.json()).user);
     },
+
     setUserEditError(context, error) {
       context.commit("userEditError", error);
     },
