@@ -120,6 +120,8 @@ router.post("/sign-in", (req, res) => {
 
 router.get("/me", privateRouteMiddleware, (req, res) => {
 	const user = jwt.decode(req.headers.authorization.split("Bearer ")[1]);
+	delete user["iat"];
+	delete user["exp"];
 	res.send({ user });
 });
 
