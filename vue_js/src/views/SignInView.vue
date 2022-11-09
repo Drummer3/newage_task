@@ -1,4 +1,6 @@
 <script lang="ts">
+import authStore from "@/store/authStore";
+
 export default {
   data() {
     return {
@@ -31,6 +33,8 @@ export default {
         this.error = (await response.json()).error;
       } else {
         const token = (await response.json()).token;
+        authStore.commit("login", token);
+        this.$router.replace("/profile");
       }
     },
   },
