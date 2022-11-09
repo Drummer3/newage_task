@@ -115,11 +115,7 @@ router.post("/sign-in", (req, res) => {
 		);
 	delete userDetails["password"];
 	const token = jwt.sign(userDetails, JWT_SECRET_KEY, { expiresIn: "60m" });
-	return (
-		res.header("Authorization", `Bearer ${token}`),
-		res.status(200),
-		res.json({ status: "success" })
-	);
+	return res.status(200), res.json({ status: "success", token });
 });
 
 router.get("/me", privateRouteMiddleware, (req, res) => {
