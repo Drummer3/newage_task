@@ -41,6 +41,13 @@ export default {
       >
         Profile
       </RouterLink>
+      <RouterLink
+        class="px-4 py-2 duration-150 hover:text-purple-700"
+        to="/log-out"
+        v-if="isAuthenticated"
+      >
+        Log Out
+      </RouterLink>
     </nav>
   </header>
 
