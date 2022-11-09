@@ -6,7 +6,7 @@ export default {
   data() {
     return {
       error: "",
-      user: { firstName: "", lastName: "", birthday: "", email: "", uuid: "" },
+      user: authStore.state.user,
     };
   },
   async created() {
@@ -25,27 +25,15 @@ export default {
   methods: {
     async handleUserEdit() {
       if (this.$route.params.userId !== this.user.uuid)
-        return (this.error = "You can't change other user's details");
-      this.error = "";
-
-      const response = await fetch(
-        `http://localhost:8000/api/users/${this.user.uuid}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${authStore.state.token}`,
-            Accept: "*/*",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: this.user.firstName,
-            lastName: this.user.lastName,
-          }),
-        }
-      );
-      if (!response.ok) return (this.error = (await response.json()).error);
-      authStore.dispatch("userEdit", await response.json());
+        return authStore.dispatch(
+          "setUserEditError",
+          "You can't change other user's details"
+        );
+      authStore.dispatch("setUserEditError", "");
+      authStore.dispatch("userEdit", {
+        uuid: this.user.uuid,
+        user: { firstName: this.user.firstName, lastName: this.user.lastName },
+      });
     },
   },
 };
