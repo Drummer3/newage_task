@@ -1,3 +1,4 @@
+import authStore from "@/store/authStore";
 import HomeView from "@/views/HomeView.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -13,17 +14,17 @@ const router = createRouter({
     {
       path: "/sign-up",
       name: "sign-up",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      beforeEnter: () => {
+        if (authStore.state.authenticated) return false;
+      },
       component: () => import("../views/SignUpView.vue"),
     },
     {
       path: "/sign-in",
       name: "sign-in",
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
+      beforeEnter: () => {
+        if (authStore.state.authenticated) return false;
+      },
       component: () => import("../views/SignInView.vue"),
     },
   ],
