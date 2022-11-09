@@ -23,7 +23,7 @@ router.put(
 		if (!firstName || !lastName)
 			return (
 				res.status(400),
-				res.json({ err: "First name and last name are required fields" })
+				res.json({ error: "First name and last name are required fields" })
 			);
 
 		if (!/^[A-Za-z]+$/.test(firstName))
@@ -66,7 +66,7 @@ router.delete(
 		deleteUserFromDatabase(req.params.userid);
 		const token = req.headers.authorization;
 		blacklistToken(token);
-		return res.send({message: "User has been successfully deleted"});
+		return res.send({ message: "User has been successfully deleted" });
 	}
 );
 
