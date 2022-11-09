@@ -3,27 +3,21 @@ import authStore from "@/store/authStore";
 
 export default {
   props: ["edit"],
-  data() {
-    return {
-      error: "",
-      user: authStore.state.user,
-    };
+  computed: {
+    user() {
+      return authStore.state.user;
+    },
+    error() {
+      return authStore.state.userInfoError || authStore.state.userEditError;
+    },
   },
   async created() {
-    const response = await fetch("http://localhost:8000/api/auth/me", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${authStore.state.token}`,
-        Accept: "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) return console.error(await response.json());
-    this.user = (await response.json()).user;
+    if (!this.user.uuid) {
+      authStore.dispatch("userInfo");
+    }
   },
   methods: {
-    async handleUserEdit() {
+    async handleUserEditSubmit() {
       if (this.$route.params.userId !== this.user.uuid)
         return authStore.dispatch(
           "setUserEditError",
@@ -132,7 +126,7 @@ export default {
     <button
       v-if="edit"
       class="w-full px-4 py-2 rounded-lg text-gray-50 bg-purple-600 duration-100 hover:bg-purple-500"
-      @click="handleUserEdit"
+      @click="handleUserEditSubmit"
     >
       Update User
     </button>
