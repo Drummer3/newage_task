@@ -43,6 +43,15 @@ router.post("/sign-up", (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
+	if (!firstName || !lastName || !birthday || !email || !password) {
+		return (
+			res.status(400),
+			res.json({
+				error:
+					"Required fields are: first name, last name, birthday, email, password",
+			})
+		);
+	}
 	const isEmailUsed = readUserFromDatabase(email);
 	if (isEmailUsed)
 		return (
