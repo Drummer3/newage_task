@@ -46,7 +46,7 @@ export default {
         stroke="currentColor"
         class="w-8 h-8 cursor-pointer p-1 rounded-md text-purple-50 bg-purple-600 duration-150 hover:bg-purple-500"
         v-if="!edit"
-        @click="() => $router.replace(`/profile/${user.uuid}/edit`)"
+        @click="() => $router.push(`/profile/${user.uuid}/edit`)"
       >
         <path
           stroke-linecap="round"

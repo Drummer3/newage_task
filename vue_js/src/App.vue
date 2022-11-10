@@ -17,7 +17,7 @@ export default {
   methods: {
     logOut() {
       authStore.dispatch("logout");
-      return this.$router.replace("/");
+      return this.$router.push("/");
     },
   },
 };
