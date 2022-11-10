@@ -11,6 +11,7 @@ const authStore = createStore({
       signUpError: "",
       userEditError: "",
       userInfoError: "",
+      userDeleteError: "",
     };
   },
   mutations: {
@@ -42,6 +43,9 @@ const authStore = createStore({
     userEditSuccess(state, user) {
       state.user = user;
       router.push("/profile");
+    },
+    userDeleteError(state, error) {
+      state.userDeleteError = error;
     },
   },
   actions: {
@@ -122,6 +126,25 @@ const authStore = createStore({
       if (!response.ok)
         return context.commit("userEditError", (await response.json()).error);
       return context.commit("userEditSuccess", (await response.json()).user);
+    },
+
+    async userDelete(context, uuid) {
+      const response: any = await fetch(
+        `http://localhost:8000/api/users/${uuid}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${authStore.state.token}`,
+            Accept: "*/*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok)
+        return context.commit("userDeleteError", (await response.json()).error);
+      context.commit("logout");
+      return router.push("/");
     },
 
     setUserEditError(context, error) {
