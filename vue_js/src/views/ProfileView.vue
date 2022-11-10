@@ -61,6 +61,7 @@ export default {
         stroke-width="1.5"
         stroke="currentColor"
         class="w-8 h-8 cursor-pointer p-1 rounded-md text-red-50 bg-red-600 duration-150 hover:bg-red-500"
+        @click="() => $router.push(`/profile/${user.uuid}/delete`)"
       >
         <path
           stroke-linecap="round"
@@ -69,7 +70,7 @@ export default {
         />
       </svg>
     </div>
-    <p class="text-center text-xl">Profile</p>
+    <p class="text-center text-xl">{{ edit ? "Edit " : undefined }}Profile</p>
     <div
       v-if="edit && error"
       class="p-4 border-2 border-red-500 rounded-lg text-center"
@@ -129,6 +130,13 @@ export default {
       @click="handleUserEditSubmit"
     >
       Update User
+    </button>
+    <button
+      v-if="edit"
+      class="w-full px-4 py-2 rounded-lg text-gray-50 bg-red-600 duration-100 hover:bg-red-500"
+      @click="() => $router.push(`/profile`)"
+    >
+      Cancel
     </button>
   </div>
 </template>
