@@ -60,3 +60,19 @@ body {
 .header__link {
   @apply px-4 py-2 duration-150 hover:text-purple-700;
 }
+
+.card {
+  @apply relative p-4 rounded-xl flex flex-col gap-4 max-w-sm mx-auto shadow-lg duration-150 outline-0 outline transition-all hover:outline-2;
+}
+
+.card .title {
+  @apply text-center text-xl;
+}
+
+.card__red {
+  @apply bg-red-50 shadow-red-900 outline-red-500 hover:shadow-red-500;
+}
+
+.card__purple {
+  @apply bg-purple-50 shadow-purple-900 outline-purple-500 hover:shadow-purple-500;
+}

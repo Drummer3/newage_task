@@ -31,10 +31,8 @@ export default {
 </script>
 
 <template>
-  <div
-    class="relative bg-gray-50 p-4 rounded-xl flex flex-col gap-4 max-w-sm mx-auto shadow-lg shadow-gray-900 duration-150 outline-0 outline outline-purple-500 transition-all hover:outline-2 hover:shadow-gray-500"
-  >
-    <p class="text-center text-xl">Delete Profile</p>
+  <div class="card card__red">
+    <p class="title">Delete Profile</p>
     <p class="text-center text-md">
       Delete action is irreversible and you will lose access to your account!
     </p>

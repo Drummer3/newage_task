@@ -34,9 +34,7 @@ export default {
 </script>
 
 <template>
-  <div
-    class="relative bg-gray-50 p-4 rounded-xl flex flex-col gap-4 max-w-sm mx-auto shadow-lg shadow-gray-900 duration-150 outline-0 outline outline-purple-500 transition-all hover:outline-2 hover:shadow-gray-500"
-  >
+  <div class="card card__purple">
     <div class="absolute right-4 top-4 flex gap-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -70,7 +68,7 @@ export default {
         />
       </svg>
     </div>
-    <p class="text-center text-xl">{{ edit ? "Edit " : undefined }}Profile</p>
+    <p class="title">{{ edit ? "Edit " : undefined }}Profile</p>
     <div v-if="edit && error" class="error-box">
       <span>{{ error }}</span>
     </div>

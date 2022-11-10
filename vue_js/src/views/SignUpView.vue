@@ -32,11 +32,8 @@ export default {
 </script>
 
 <template>
-  <form
-    @submit.prevent="submitHandler"
-    class="bg-gray-50 p-4 rounded-xl flex flex-col gap-4 max-w-xs mx-auto shadow-lg shadow-gray-900 duration-150 hover:shadow-gray-500"
-  >
-    <p class="text-center text-xl">Sign Up</p>
+  <form @submit.prevent="submitHandler" class="card card__purple">
+    <p class="title">Sign Up</p>
     <div v-if="error" class="error-box">
       <span class="text-sm font-semibold">{{ error }}</span>
     </div>
