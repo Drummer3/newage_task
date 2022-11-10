@@ -127,11 +127,6 @@ const authStore = createStore({
     setUserEditError(context, error) {
       context.commit("userEditError", error);
     },
-
-    // Handles logout request
-    logout(context) {
-      context.commit("logout");
-    },
   },
 });
 
