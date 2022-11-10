@@ -22,3 +22,19 @@ You car view their respective READMEs in subdirectories: [NodeJs](./node_js/READ
 _Please note that while I was working on this project, I had a full-time job_
 _I couldn't focus as much as I wanted to._
 _I had to work on this task between breaks and after work hours._
+
+---
+
+## Running this project
+
+node:
+
+```sh
+cd node_js/ && npm install && npm run dev
+```
+
+vue:
+
+```sh
+cd vue_js/ && npm install && npm run dev
+```
