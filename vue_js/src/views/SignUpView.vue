@@ -15,6 +15,9 @@ export default {
       return authStore.state.signUpError;
     },
   },
+  created() {
+    authStore.commit("setSignUpError", "");
+  },
   methods: {
     async submitHandler() {
       authStore.commit("setSignUpError", "");

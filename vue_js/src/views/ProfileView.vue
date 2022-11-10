@@ -12,6 +12,7 @@ export default {
     },
   },
   async created() {
+    authStore.commit("setUserEditError", "");
     if (!this.user.uuid) {
       authStore.dispatch("userInfo");
     }
