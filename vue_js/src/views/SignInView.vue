@@ -46,7 +46,12 @@ export default {
     </div>
     <label class="form-field">
       <p>Email</p>
-      <input required type="email" v-model="email" />
+      <input
+        required
+        type="email"
+        placeholder="someone@newage.io"
+        v-model="email"
+      />
     </label>
     <label class="form-field">
       <p>Password</p>
