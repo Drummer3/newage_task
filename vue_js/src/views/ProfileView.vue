@@ -35,7 +35,7 @@ export default {
 
 <template>
   <div class="card card__purple">
-    <div class="absolute right-4 top-4 flex gap-2">
+    <div class="action-buttons__top-right">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -82,7 +82,7 @@ export default {
       />
     </label>
     <label class="form-field">
-      <p class="text-xs">Last Name</p>
+      <p>Last Name</p>
       <input
         :disabled="!edit"
         type="text"
@@ -91,11 +91,11 @@ export default {
       />
     </label>
     <label class="form-field">
-      <p class="text-xs">Birthday</p>
+      <p>Birthday</p>
       <input disabled type="text" :value="user.birthday" />
     </label>
     <label class="form-field">
-      <p class="text-xs">Email</p>
+      <p>Email</p>
       <input disabled type="text" :value="user.email" />
     </label>
     <label class="form-field">

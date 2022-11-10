@@ -35,7 +35,7 @@ export default {
   <form @submit.prevent="submitHandler" class="card card__purple">
     <p class="title">Sign Up</p>
     <div v-if="error" class="error-box">
-      <span class="text-sm font-semibold">{{ error }}</span>
+      <span>{{ error }}</span>
     </div>
     <label class="form-field">
       <p>First Name</p>
