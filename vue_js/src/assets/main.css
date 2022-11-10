@@ -5,3 +5,47 @@
 body {
   @apply bg-gray-800;
 }
+
+.button {
+  @apply w-full px-4 py-2 rounded-lg duration-100;
+}
+
+.button__red {
+  @apply text-red-50 bg-red-600 hover:bg-red-500;
+}
+
+.button__purple {
+  @apply text-purple-50 bg-purple-600 hover:bg-purple-500;
+}
+
+.icon-button {
+  @apply w-8 h-8 cursor-pointer p-1 rounded-md duration-150;
+}
+
+.icon-button__purple {
+  @apply text-purple-50 bg-purple-600 hover:bg-purple-500;
+}
+
+.icon-button__red {
+  @apply text-red-50 bg-red-600 hover:bg-red-500;
+}
+
+.error-box {
+  @apply p-4 border-2 border-red-500 rounded-lg text-center;
+}
+
+.error-box span {
+  @apply text-sm font-semibold;
+}
+
+.form-field > p {
+  @apply text-xs;
+}
+
+.form-field > input {
+  @apply w-full bg-gray-900 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-800;
+}
+
+.form-field > input:disabled {
+  @apply bg-gray-500;
+}

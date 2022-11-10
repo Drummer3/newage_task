@@ -44,7 +44,7 @@ export default {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="w-8 h-8 cursor-pointer p-1 rounded-md text-purple-50 bg-purple-600 duration-150 hover:bg-purple-500"
+        class="icon-button icon-button__purple"
         v-if="!edit"
         @click="() => $router.push(`/profile/${user.uuid}/edit`)"
       >
@@ -60,7 +60,7 @@ export default {
         viewBox="0 0 24 24"
         stroke-width="1.5"
         stroke="currentColor"
-        class="w-8 h-8 cursor-pointer p-1 rounded-md text-red-50 bg-red-600 duration-150 hover:bg-red-500"
+        class="icon-button icon-button__red"
         @click="() => $router.push(`/profile/${user.uuid}/delete`)"
       >
         <path
@@ -71,69 +71,49 @@ export default {
       </svg>
     </div>
     <p class="text-center text-xl">{{ edit ? "Edit " : undefined }}Profile</p>
-    <div
-      v-if="edit && error"
-      class="p-4 border-2 border-red-500 rounded-lg text-center"
-    >
-      <span class="text-sm font-semibold">{{ error }}</span>
+    <div v-if="edit && error" class="error-box">
+      <span>{{ error }}</span>
     </div>
-    <label>
-      <p class="text-xs">First Name</p>
+    <label class="form-field">
+      <p>First Name</p>
       <input
         :disabled="!edit"
-        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
         type="text"
         placeholder="David"
         v-model="user.firstName"
       />
     </label>
-    <label>
+    <label class="form-field">
       <p class="text-xs">Last Name</p>
       <input
         :disabled="!edit"
-        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
         type="text"
         placeholder="Munjishvili"
         v-model="user.lastName"
       />
     </label>
-    <label>
+    <label class="form-field">
       <p class="text-xs">Birthday</p>
-      <input
-        disabled
-        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
-        type="text"
-        :value="user.birthday"
-      />
+      <input disabled type="text" :value="user.birthday" />
     </label>
-    <label>
+    <label class="form-field">
       <p class="text-xs">Email</p>
-      <input
-        disabled
-        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
-        type="text"
-        :value="user.email"
-      />
+      <input disabled type="text" :value="user.email" />
     </label>
-    <label>
-      <p class="text-xs">Unique ID</p>
-      <input
-        disabled
-        class="w-full bg-gray-800 rounded-lg px-4 py-2 duration-100 text-gray-50 focus:outline-none focus:bg-gray-700"
-        type="text"
-        :value="user.uuid"
-      />
+    <label class="form-field">
+      <p>Unique ID</p>
+      <input disabled type="text" :value="user.uuid" />
     </label>
     <button
       v-if="edit"
-      class="w-full px-4 py-2 rounded-lg text-gray-50 bg-purple-600 duration-100 hover:bg-purple-500"
+      class="button button__purple"
       @click="handleUserEditSubmit"
     >
       Update User
     </button>
     <button
       v-if="edit"
-      class="w-full px-4 py-2 rounded-lg text-gray-50 bg-red-600 duration-100 hover:bg-red-500"
+      class="button button__red"
       @click="() => $router.push(`/profile`)"
     >
       Cancel
