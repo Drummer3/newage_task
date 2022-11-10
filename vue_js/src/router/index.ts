@@ -45,6 +45,14 @@ const router = createRouter({
       },
       component: () => import("../views/ProfileView.vue"),
     },
+    {
+      path: "/profile/:userId/delete",
+      name: "profile-delete",
+      beforeEnter: () => {
+        if (!authStore.state.authenticated) return false;
+      },
+      component: () => import("../views/DeleteView.vue"),
+    },
   ],
 });
 
