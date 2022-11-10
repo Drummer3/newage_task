@@ -1,8 +1,8 @@
 <script lang="ts">
+import authStore from "../store/authStore";
 export default {
   data() {
     return {
-      error: null,
       firstName: "",
       lastName: "",
       birthday: "",
@@ -10,29 +10,22 @@ export default {
       password: "",
     };
   },
+  computed: {
+    error() {
+      return authStore.state.signUpError;
+    },
+  },
   methods: {
     async submitHandler() {
-      this.error = null;
-      const response = await fetch("http://localhost:8000/api/auth/sign-up", {
-        method: "POST",
-        headers: {
-          Accept: "*/*",
-          "Accept-Encoding": "gzip, deflate, br",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstName: this.firstName,
-          lastName: this.lastName,
-          birthday: this.birthday,
-          email: this.email,
-          password: this.password,
-        }),
-      });
-      if (!response.ok) {
-        this.error = (await response.json()).error;
-      } else {
-        this.$router.replace("/sign-in");
-      }
+      authStore.commit("setSignUpError", "");
+      const payload = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        birthday: this.birthday,
+        email: this.email,
+        password: this.password,
+      };
+      authStore.dispatch("signUp", payload);
     },
   },
 };

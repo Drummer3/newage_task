@@ -8,6 +8,7 @@ const authStore = createStore({
       token: "",
       user: { firstName: "", lastName: "", birthday: "", email: "", uuid: "" },
       logInError: "",
+      signUpError: "",
       userEditError: "",
       userInfoError: "",
     };
@@ -20,6 +21,9 @@ const authStore = createStore({
     },
     setLogInError(state, error) {
       state.logInError = error;
+    },
+    setSignUpError(state, error) {
+      state.signUpError = error;
     },
     logout(state) {
       state.token = "";
@@ -66,8 +70,23 @@ const authStore = createStore({
       } else {
         const token = (await response.json()).token;
         context.commit("login", token);
-        router.replace("/profile");
+        router.push("/profile");
       }
+    },
+
+    async signUp(context, payload) {
+      const response = await fetch("http://localhost:8000/api/auth/sign-up", {
+        method: "POST",
+        headers: {
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok)
+        context.commit("setSignUpError", (await response.json()).error);
+      else router.push("/sign-in");
     },
 
     async userInfo(context) {
