@@ -15,8 +15,8 @@ export default {
     authStore.dispatch("pageLoad");
   },
   methods: {
-    logOut() {
-      authStore.commit("logout");
+    signOut() {
+      authStore.commit("signOut");
       return this.$router.push("/");
     },
   },
@@ -39,7 +39,7 @@ export default {
         class="header__link"
         to="/"
         v-if="isAuthenticated"
-        @click.prevent="logOut"
+        @click.prevent="signOut"
       >
         Log Out
       </RouterLink>

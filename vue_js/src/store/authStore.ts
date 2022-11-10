@@ -7,7 +7,7 @@ const authStore = createStore({
       authenticated: false,
       token: "",
       user: { firstName: "", lastName: "", birthday: "", email: "", uuid: "" },
-      logInError: "",
+      signInError: "",
       signUpError: "",
       userEditError: "",
       userInfoError: "",
@@ -15,12 +15,12 @@ const authStore = createStore({
     };
   },
   mutations: {
-    login(state, token: string) {
+    signIn(state, token: string) {
       state.token = token;
       state.authenticated = true;
       localStorage.setItem("authToken", token);
     },
-    logout(state) {
+    signOut(state) {
       state.token = "";
       state.authenticated = false;
       state.user = {
@@ -35,8 +35,8 @@ const authStore = createStore({
     setUser(state, user) {
       state.user = user;
     },
-    setLogInError(state, error) {
-      state.logInError = error;
+    setSignInError(state, error) {
+      state.signInError = error;
     },
     setSignUpError(state, error) {
       state.signUpError = error;
@@ -55,7 +55,7 @@ const authStore = createStore({
     pageLoad(context) {
       const localToken = localStorage.getItem("authToken");
       if (localToken) {
-        context.commit("login", localToken);
+        context.commit("signIn", localToken);
       }
     },
 
@@ -73,10 +73,10 @@ const authStore = createStore({
         }
       );
       if (!response.ok) {
-        context.commit("setLogInError", (await response.json()).error);
+        context.commit("setSignInError", (await response.json()).error);
       } else {
         const token = (await response.json()).token;
-        context.commit("login", token);
+        context.commit("signIn", token);
         router.push("/profile");
       }
     },
@@ -156,7 +156,7 @@ const authStore = createStore({
           "setUserDeleteError",
           (await response.json()).error
         );
-      context.commit("logout");
+      context.commit("signOut");
       return router.push("/");
     },
   },

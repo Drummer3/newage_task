@@ -10,20 +10,23 @@ export default {
   },
   computed: {
     error() {
-      return authStore.state.logInError;
+      return authStore.state.signInError;
     },
+  },
+  created() {
+    authStore.commit("setSignInError", "");
   },
   methods: {
     async submitHandler() {
-      authStore.commit("setLogInError", "");
+      authStore.commit("setSignInError", "");
       if (!this.email.includes("@newage.io"))
         return authStore.commit(
-          "setLogInError",
+          "setSignInError",
           "Please use email with @newage.io"
         );
       if (this.password.length < 8)
         return authStore.commit(
-          "setLogInError",
+          "setSignInError",
           "Password length must be equal or more than 8 characters"
         );
       authStore.dispatch("signIn", {
