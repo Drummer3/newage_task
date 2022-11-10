@@ -1,6 +1,8 @@
 import { createStore } from "vuex";
 import router from "../router/index";
 
+const BACKEND_URI = "http://localhost:8000/api";
+
 const authStore = createStore({
   state() {
     return {
@@ -60,18 +62,15 @@ const authStore = createStore({
     },
 
     async signIn(context, payload) {
-      const response: any = await fetch(
-        "http://localhost:8000/api/auth/sign-in",
-        {
-          method: "POST",
-          headers: {
-            Accept: "*/*",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response: any = await fetch(BACKEND_URI + "/auth/sign-in", {
+        method: "POST",
+        headers: {
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
       if (!response.ok) {
         context.commit("setSignInError", (await response.json()).error);
       } else {
@@ -82,7 +81,7 @@ const authStore = createStore({
     },
 
     async signUp(context, payload) {
-      const response = await fetch("http://localhost:8000/api/auth/sign-up", {
+      const response = await fetch(BACKEND_URI + "/auth/sign-up", {
         method: "POST",
         headers: {
           Accept: "*/*",
@@ -98,7 +97,7 @@ const authStore = createStore({
 
     async userInfo(context) {
       context.commit("setUserInfoError", "");
-      const response: any = await fetch("http://localhost:8000/api/auth/me", {
+      const response: any = await fetch(BACKEND_URI + "/auth/me", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${authStore.state.token}`,
@@ -117,7 +116,7 @@ const authStore = createStore({
 
     async userEdit(context, payload) {
       const response: any = await fetch(
-        `http://localhost:8000/api/users/${payload.uuid}`,
+        `${BACKEND_URI}/users/${payload.uuid}`,
         {
           method: "PUT",
           headers: {
@@ -139,18 +138,15 @@ const authStore = createStore({
     },
 
     async userDelete(context, uuid) {
-      const response: any = await fetch(
-        `http://localhost:8000/api/users/${uuid}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${authStore.state.token}`,
-            Accept: "*/*",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response: any = await fetch(`${BACKEND_URI}/users/${uuid}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${authStore.state.token}`,
+          Accept: "*/*",
+          "Accept-Encoding": "gzip, deflate, br",
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok)
         return context.commit(
           "setUserDeleteError",
