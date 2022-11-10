@@ -20,31 +20,34 @@ const authStore = createStore({
       state.authenticated = true;
       localStorage.setItem("authToken", token);
     },
+    logout(state) {
+      state.token = "";
+      state.authenticated = false;
+      state.user = {
+        firstName: "",
+        lastName: "",
+        birthday: "",
+        email: "",
+        uuid: "",
+      };
+      localStorage.removeItem("authToken");
+    },
+    setUser(state, user) {
+      state.user = user;
+    },
     setLogInError(state, error) {
       state.logInError = error;
     },
     setSignUpError(state, error) {
       state.signUpError = error;
     },
-    logout(state) {
-      state.token = "";
-      state.authenticated = false;
-      localStorage.removeItem("authToken");
-    },
-    userInfoSuccess(state, user) {
-      state.user = user;
-    },
-    userInfoError(state, error) {
+    setUserInfoError(state, error) {
       state.userInfoError = error;
     },
-    userEditError(state, error) {
+    setUserEditError(state, error) {
       state.userEditError = error;
     },
-    userEditSuccess(state, user) {
-      state.user = user;
-      router.push("/profile");
-    },
-    userDeleteError(state, error) {
+    setUserDeleteError(state, error) {
       state.userDeleteError = error;
     },
   },
@@ -94,7 +97,7 @@ const authStore = createStore({
     },
 
     async userInfo(context) {
-      context.commit("userInfoError", "");
+      context.commit("setUserInfoError", "");
       const response: any = await fetch("http://localhost:8000/api/auth/me", {
         method: "GET",
         headers: {
@@ -105,8 +108,11 @@ const authStore = createStore({
         },
       });
       if (!response.ok)
-        return context.commit("userInfoError", (await response.json()).error);
-      context.commit("userInfoSuccess", (await response.json()).user);
+        return context.commit(
+          "setUserInfoError",
+          (await response.json()).error
+        );
+      context.commit("setUser", (await response.json()).user);
     },
 
     async userEdit(context, payload) {
@@ -124,8 +130,12 @@ const authStore = createStore({
         }
       );
       if (!response.ok)
-        return context.commit("userEditError", (await response.json()).error);
-      return context.commit("userEditSuccess", (await response.json()).user);
+        return context.commit(
+          "setUserInfoError",
+          (await response.json()).error
+        );
+      context.commit("setUser", (await response.json()).user);
+      return router.push("/profile");
     },
 
     async userDelete(context, uuid) {
@@ -142,13 +152,12 @@ const authStore = createStore({
         }
       );
       if (!response.ok)
-        return context.commit("userDeleteError", (await response.json()).error);
+        return context.commit(
+          "setUserDeleteError",
+          (await response.json()).error
+        );
       context.commit("logout");
       return router.push("/");
-    },
-
-    setUserEditError(context, error) {
-      context.commit("userEditError", error);
     },
   },
 });

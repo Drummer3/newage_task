@@ -19,11 +19,11 @@ export default {
   methods: {
     async handleUserEditSubmit() {
       if (this.$route.params.userId !== this.user.uuid)
-        return authStore.dispatch(
+        return authStore.commit(
           "setUserEditError",
           "You can't change other user's details"
         );
-      authStore.dispatch("setUserEditError", "");
+      authStore.commit("setUserEditError", "");
       authStore.dispatch("userEdit", {
         uuid: this.user.uuid,
         user: { firstName: this.user.firstName, lastName: this.user.lastName },
