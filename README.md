@@ -11,7 +11,7 @@ You car view their respective READMEs in subdirectories: [NodeJs](./node_js/READ
 - [node](https://nodejs.org/en/)
   - [Express](http://expressjs.com/)
   - [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
-  - [brypt](https://github.com/kelektiv/node.bcrypt.js)
+  - [bcrypt](https://github.com/kelektiv/node.bcrypt.js)
 - [vue](https://vuejs.org/)
   - [Options API](https://vuejs.org/api/options-state.html)
   - [Vuex](https://vuex.vuejs.org/)
