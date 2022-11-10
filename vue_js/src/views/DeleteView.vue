@@ -38,16 +38,8 @@ export default {
     <p class="text-center text-md">
       Delete action is irreversible and you will lose access to your account!
     </p>
-    <button
-      class="w-full px-4 py-2 rounded-lg text-gray-50 bg-red-600 duration-100 hover:bg-red-500"
-      @click="deleteUser"
-    >
-      Delete
-    </button>
-    <button
-      class="w-full px-4 py-2 rounded-lg text-gray-50 bg-purple-600 duration-100 hover:bg-purple-500"
-      @click="() => router.back()"
-    >
+    <button class="button button__red" @click="deleteUser">Delete</button>
+    <button class="button button__purple" @click="() => router.back()">
       Cancel
     </button>
   </div>
