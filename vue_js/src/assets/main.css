@@ -49,3 +49,14 @@ body {
 .form-field > input:disabled {
   @apply bg-gray-500;
 }
+
+.header {
+  @apply w-full bg-gray-50 mb-4 p-4 rounded-b-3xl;
+}
+
+.header > nav {
+  @apply flex gap-4;
+}
+.header__link {
+  @apply px-4 py-2 duration-150 hover:text-purple-700;
+}

@@ -24,31 +24,19 @@ export default {
 </script>
 
 <template>
-  <header class="w-full bg-gray-50 mb-4 p-4 rounded-b-3xl">
-    <nav class="flex gap-4">
-      <RouterLink
-        class="px-4 py-2 duration-150 hover:text-purple-700"
-        to="/sign-up"
-        v-if="!isAuthenticated"
-      >
+  <header class="header">
+    <nav>
+      <RouterLink class="header__link" to="/sign-up" v-if="!isAuthenticated">
         Sign Up
       </RouterLink>
-      <RouterLink
-        class="px-4 py-2 duration-150 hover:text-purple-700"
-        to="/sign-in"
-        v-if="!isAuthenticated"
-      >
+      <RouterLink class="header__link" to="/sign-in" v-if="!isAuthenticated">
         Sign In
       </RouterLink>
-      <RouterLink
-        class="px-4 py-2 duration-150 hover:text-purple-700"
-        to="/profile"
-        v-if="isAuthenticated"
-      >
+      <RouterLink class="header__link" to="/profile" v-if="isAuthenticated">
         Profile
       </RouterLink>
       <RouterLink
-        class="px-4 py-2 duration-150 hover:text-purple-700"
+        class="header__link"
         to="/"
         v-if="isAuthenticated"
         @click.prevent="logOut"
